@@ -7,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Bookmark(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String,
-    val snippetText: String,
-    val imageUri: String?,
-    val timestamp: Long
+    val snippetText: String? = null,
+    val imageUri: String? = null,
+    val timestamp: Long = System.currentTimeMillis()
 )

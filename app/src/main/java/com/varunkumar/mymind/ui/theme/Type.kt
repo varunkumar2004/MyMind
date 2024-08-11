@@ -33,12 +33,22 @@ val Typography = Typography(
     */
 )
 
-val RobotoTypography = Typography(
+val CustomTypography = Typography(
     titleLarge = TextStyle(
-        fontFamily = FontFamily.Serif,
+        fontFamily = FontFamily.Cursive,
         fontWeight = FontWeight.ExtraBold,
-        fontSize = 25.sp,
+        fontSize = 30.sp,
         lineHeight = 24.sp,
         letterSpacing = 0.5.sp
+    ),
+    bodyLarge = TextStyle(
+        fontFamily = FontFamily.Serif,
+        fontWeight = FontWeight.SemiBold,
+        fontSize = 18.sp
+    ),
+    bodyMedium = TextStyle(
+        fontFamily = FontFamily.Default,
+        fontWeight = FontWeight.Normal,
+        fontSize = 16.sp
     )
 )

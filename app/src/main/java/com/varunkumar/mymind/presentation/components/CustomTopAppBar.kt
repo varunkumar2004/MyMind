@@ -1,4 +1,4 @@
-package com.varunkumar.mymind.presentation
+package com.varunkumar.mymind.presentation.components
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
@@ -10,7 +10,7 @@ import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import com.varunkumar.mymind.ui.theme.RobotoTypography
+import com.varunkumar.mymind.ui.theme.CustomTypography
 import com.varunkumar.mymind.ui.theme.secondaryColor
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -28,7 +28,7 @@ fun CustomTopAppBar(
         title = {
             Text(
                 text = title,
-                style = RobotoTypography.titleLarge
+                style = CustomTypography.titleLarge
             )
         },
         actions = {

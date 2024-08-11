@@ -1,7 +1,6 @@
 package com.varunkumar.mymind.data
 
 import com.varunkumar.mymind.data.models.Bookmark
-import kotlinx.coroutines.flow.Flow
 
 class BookmarkRepository(
     private val bookmarkDao: BookmarkDao
