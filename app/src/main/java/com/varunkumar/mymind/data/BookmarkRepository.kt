@@ -11,6 +11,10 @@ class BookmarkRepository(
         bookmarkDao.insertBookmark(bookmark)
     }
 
+    suspend fun getBookmarkById(id: Int): Bookmark {
+        return bookmarkDao.getBookmarkById(id)
+    }
+
     suspend fun delete(bookmark: Bookmark) {
         bookmarkDao.deleteBookmark(bookmark)
     }

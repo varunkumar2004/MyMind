@@ -12,6 +12,9 @@ interface BookmarkDao {
     @Query("SELECT * FROM bookmarks")
     fun getAllBookmarks(): Flow<List<Bookmark>>
 
+    @Query("SELECT * FROM bookmarks WHERE id = :id")
+    suspend fun getBookmarkById(id: Int): Bookmark
+
     @Upsert
     suspend fun insertBookmark(bookmark: Bookmark)
 

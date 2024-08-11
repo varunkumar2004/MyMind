@@ -9,6 +9,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.flow.update
@@ -19,10 +20,24 @@ import javax.inject.Inject
 class BookmarksViewModel @Inject constructor(
     private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow(BookmarksState())
-    private val _bookmarks =
-        bookmarkRepository.allBookmarks.stateIn(viewModelScope, SharingStarted.Eagerly, emptyList())
-    val state = _bookmarks
+    private val _state = MutableStateFlow(
+        BookmarksState()
+    )
+    private val _bookmarks = bookmarkRepository.allBookmarks
+    val state = combine(_state, _bookmarks) { state, bookmarks ->
+        _state.update {
+            it.copy(
+                bookmarks = bookmarks
+            )
+        }
+        state
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), BookmarksState())
+
+    fun getBookmarkById(id: Int) {
+        viewModelScope.launch {
+            _state.update { it.copy(bookmark = bookmarkRepository.getBookmarkById(id)) }
+        }
+    }
 
     fun insert(bookmark: Bookmark) {
         viewModelScope.launch {

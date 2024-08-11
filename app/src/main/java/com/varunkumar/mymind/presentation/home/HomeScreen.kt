@@ -1,6 +1,7 @@
-package com.varunkumar.mymind.presentation
+package com.varunkumar.mymind.presentation.home
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -14,25 +15,32 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.FloatingActionButtonDefaults
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.ListItem
+import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import com.varunkumar.mymind.data.models.Bookmark
+import com.varunkumar.mymind.presentation.BookmarksViewModel
 import com.varunkumar.mymind.presentation.components.BookmarkView
 import com.varunkumar.mymind.presentation.components.CustomTopAppBar
+import com.varunkumar.mymind.ui.theme.CustomTypography
 import com.varunkumar.mymind.ui.theme.radialGradient
 
 @Composable
 fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: BookmarksViewModel,
-    onSearchAction: () -> Unit
+    onSearchAction: () -> Unit,
+    onBookmarkAction: (Int) -> Unit
 ) {
-    val bookmarks by viewModel.state.collectAsState()
+    val state by viewModel.state.collectAsState()
 
     Scaffold(
         topBar = {
@@ -76,34 +84,56 @@ fun HomeScreen(
             ) {
                 val radius = RoundedCornerShape(40.dp)
 
-                items(bookmarks) { bookmark ->
-//                    ListItem(
-//                        colors = ListItemDefaults.colors(
-//                            containerColor = Color.Transparent
-//                        ),
-//                        headlineContent = {
-//                            Text(
-//                                text = bookmark.title,
-//                                style = CustomTypography.bodyLarge
-//                            )
-//                        },
-//                        supportingContent = {
-//                            bookmark.snippetText?.let {snippet ->
-//                                Text(
-//                                    text = snippet,
-//                                    style = CustomTypography.bodyMedium
-//                                )
-//                            }
-//                        }
-//                    )
+                items(state.bookmarks) { bookmark ->
+
+                    if (bookmark.imageUri != null) {
+
+                    } else {
+
+                    }
+
+                    ListItem(
+                        colors = ListItemDefaults.colors(
+                            containerColor = Color.Transparent
+                        ),
+                        headlineContent = {
+                            if (bookmark.imageUri != null) {
+                                AsyncImage(
+                                    model = bookmark.imageUri,
+                                    contentDescription = bookmark.title,
+                                )
+                            } else {
+                                Text(
+                                    text = bookmark.title,
+                                    style = CustomTypography.bodyLarge
+                                )
+                            }
+                        },
+                        supportingContent = {
+                            if (bookmark.imageUri != null) {
+                                Text(
+                                    text = bookmark.title,
+                                    style = CustomTypography.bodyMedium
+                                )
+                            } else {
+                                bookmark.snippetText?.let {snippet ->
+                                    Text(
+                                        text = snippet,
+                                        style = CustomTypography.bodyMedium
+                                    )
+                                }
+                            }
+                        }
+                    )
 
 //                    Spacer(modifier = Modifier.height(5.dp))
-                    BookmarkView(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(horizontal = 16.dp, vertical = 10.dp),
-                        bookmark = bookmark
-                    )
+//                    BookmarkView(
+//                        modifier = Modifier
+//                            .fillMaxWidth()
+//                            .clickable { onBookmarkAction(bookmark.id) }
+//                            .padding(horizontal = 16.dp, vertical = 10.dp),
+//                        bookmark = bookmark
+//                    )
 
                     HorizontalDivider(
                         modifier = Modifier
