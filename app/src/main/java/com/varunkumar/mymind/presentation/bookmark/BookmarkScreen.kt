@@ -37,6 +37,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
@@ -51,6 +52,7 @@ fun BookmarkScreen(
     onBackButtonClick: () -> Unit
 ) {
     val viewModel = hiltViewModel<BookmarkViewModel>()
+    val context = LocalContext.current
     val bookmark by viewModel.bookmark.collectAsStateWithLifecycle()
     if (id != -1) id?.let { viewModel.getBookmark(id) }
 
@@ -161,6 +163,8 @@ fun BookmarkScreen(
                     model = bookmark.imageUri,
                     contentDescription = "images"
                 )
+
+                viewModel.analyseImage(context)
             }
         }
     }

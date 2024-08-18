@@ -2,6 +2,9 @@ package com.varunkumar.mymind.di
 
 import android.content.Context
 import androidx.room.Room
+import com.google.mlkit.vision.text.TextRecognition
+import com.google.mlkit.vision.text.TextRecognizer
+import com.google.mlkit.vision.text.latin.TextRecognizerOptions
 import com.varunkumar.mymind.data.BookmarkDao
 import com.varunkumar.mymind.data.BookmarkDatabase
 import com.varunkumar.mymind.data.BookmarkRepository
@@ -29,6 +32,7 @@ object AppModule {
     }
 
     @Provides
+    @Singleton
     fun provideBookmarkDao(database: BookmarkDatabase): BookmarkDao {
         return database.bookmarkDao()
     }
@@ -37,5 +41,11 @@ object AppModule {
     @Singleton
     fun provideBookmarkRepository(bookmarkDao: BookmarkDao): BookmarkRepository {
         return BookmarkRepository(bookmarkDao)
+    }
+
+    @Provides
+    @Singleton
+    fun provideTextRecognition(): TextRecognizer {
+        return TextRecognition.getClient(TextRecognizerOptions.DEFAULT_OPTIONS)
     }
 }

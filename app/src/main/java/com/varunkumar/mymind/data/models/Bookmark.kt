@@ -1,5 +1,6 @@
 package com.varunkumar.mymind.data.models
 
+import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
