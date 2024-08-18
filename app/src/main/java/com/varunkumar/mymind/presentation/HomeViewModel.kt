@@ -8,7 +8,6 @@ import com.varunkumar.mymind.data.models.Bookmark
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.stateIn
@@ -17,10 +16,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class BookmarksViewModel @Inject constructor(
+class HomeViewModel @Inject constructor(
     private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow(BookmarksState())
+    private val _state = MutableStateFlow(HomeState())
     private val _bookmarks = bookmarkRepository.allBookmarks
 
     var searchQuery = MutableStateFlow("")
@@ -35,7 +34,7 @@ class BookmarksViewModel @Inject constructor(
     val state = combine(_state, _bookmarks) { state, bookmarks ->
         _state.update { it.copy(bookmarks = bookmarks) }
         state
-    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), BookmarksState())
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), HomeState())
 
     fun onSearchQueryChange(query: String)  {
         searchQuery.update { query }

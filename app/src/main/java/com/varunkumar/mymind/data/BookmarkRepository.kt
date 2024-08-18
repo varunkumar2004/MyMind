@@ -11,7 +11,7 @@ class BookmarkRepository(
         bookmarkDao.insertBookmark(bookmark)
     }
 
-    suspend fun getBookmarkById(id: Int): Bookmark {
+    suspend fun getBookmarkById(id: Int): Bookmark? {
         return bookmarkDao.getBookmarkById(id)
     }
 
