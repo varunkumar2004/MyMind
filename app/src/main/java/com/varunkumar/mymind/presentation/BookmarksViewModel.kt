@@ -20,18 +20,26 @@ import javax.inject.Inject
 class BookmarksViewModel @Inject constructor(
     private val bookmarkRepository: BookmarkRepository
 ) : ViewModel() {
-    private val _state = MutableStateFlow(
-        BookmarksState()
-    )
+    private val _state = MutableStateFlow(BookmarksState())
     private val _bookmarks = bookmarkRepository.allBookmarks
-    val state = combine(_state, _bookmarks) { state, bookmarks ->
-        _state.update {
-            it.copy(
-                bookmarks = bookmarks
-            )
+
+    var searchQuery = MutableStateFlow("")
+        private set
+
+    val filterBookmarks = searchQuery.map { query ->
+        _state.value.bookmarks.filter {
+            it.title.contains(query, ignoreCase = true) || it.snippetText.contains(query, ignoreCase = true)
         }
+    }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
+
+    val state = combine(_state, _bookmarks) { state, bookmarks ->
+        _state.update { it.copy(bookmarks = bookmarks) }
         state
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), BookmarksState())
+
+    fun onSearchQueryChange(query: String)  {
+        searchQuery.update { query }
+    }
 
     fun getBookmarkById(id: Int) {
         viewModelScope.launch {

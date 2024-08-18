@@ -17,27 +17,7 @@ import com.varunkumar.mymind.ui.theme.secondaryColor
 @Composable
 fun CustomTopAppBar(
     modifier: Modifier = Modifier,
-    title: String,
-    onActionClick: () -> Unit
+    title: String
 ) {
-    TopAppBar(
-        modifier = modifier,
-        colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = secondaryColor
-        ),
-        title = {
-            Text(
-                text = title,
-                style = CustomTypography.titleLarge
-            )
-        },
-        actions = {
-            IconButton(onClick = onActionClick) {
-                Icon(
-                    imageVector = Icons.Default.Search,
-                    contentDescription = "Search"
-                )
-            }
-        }
-    )
+
 }

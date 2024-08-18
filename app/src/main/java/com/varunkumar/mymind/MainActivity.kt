@@ -16,6 +16,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.varunkumar.mymind.data.models.Bookmark
 import com.varunkumar.mymind.presentation.BookmarksViewModel
 import com.varunkumar.mymind.presentation.home.HomeScreen
 import com.varunkumar.mymind.presentation.Routes
@@ -40,8 +41,14 @@ class MainActivity : ComponentActivity() {
                         HomeScreen(
                             modifier = sModifier,
                             viewModel = bookmarksViewModel,
-                            onSearchAction = {
-
+                            onAddBookmarkButtonClick = {
+//                                navController.navigate(Routes.Bookmark.route + "/-1")
+                                bookmarksViewModel.insert(
+                                    bookmark = Bookmark(
+                                        title = "New Bookmark",
+                                        snippetText = "This is a new bookmark"
+                                    )
+                                )
                             },
                             onBookmarkAction = { id ->
                                 Log.d("bookmark id", id.toString())
@@ -67,7 +74,11 @@ class MainActivity : ComponentActivity() {
                             bookmarkState.bookmark?.let { bookmark ->
                                 BookmarkScreen(
                                     modifier = sModifier,
-                                    bookmark = bookmark
+                                    bookmark = bookmark,
+                                    viewModel = bookmarksViewModel,
+                                    onBackButtonClick = {
+                                        navController.navigateUp()
+                                    }
                                 )
                             } ?: run {
                                 // Handle the case where bookmark is null, e.g., show an error message
