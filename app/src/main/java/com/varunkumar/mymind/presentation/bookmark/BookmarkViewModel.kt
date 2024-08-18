@@ -34,7 +34,7 @@ class BookmarkViewModel @Inject constructor(
         _bookmark.update { it.copy(snippetText = text) }
     }
 
-    fun onBookmarkImageChange(image: String) {
+    fun onBookmarkImageChange(image: String?) {
         _bookmark.update { it.copy(imageUri = image) }
     }
 
