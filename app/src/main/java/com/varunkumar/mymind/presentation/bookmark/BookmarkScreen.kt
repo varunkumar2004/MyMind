@@ -281,41 +281,41 @@ fun BookmarkScreen(
 //                viewModel.analyseImage(context)
 //                Spacer(modifier = Modifier.height(10.dp))
 
-//                imageToText?.let { text ->
-//                    Column(
-//                        modifier = Modifier
-//                            .clip(RoundedCornerShape(20.dp))
-//                            .background(Color.White)
-//                            .padding(16.dp)
-//                            .fillMaxWidth(),
-//                        verticalArrangement = Arrangement.spacedBy(10.dp)
-//                    ) {
-//                        Row(
-//                            modifier = Modifier.fillMaxWidth(),
-//                            verticalAlignment = Alignment.CenterVertically,
-//                            horizontalArrangement = Arrangement.Center
-//                        ) {
-//                            Icon(
-//                                imageVector = Icons.Outlined.Info,
-//                                modifier = Modifier.size(20.dp),
-//                                contentDescription = null
-//                            )
-//
-//                            Spacer(modifier = Modifier.width(5.dp))
-//
-//                            Text(
-//                                text = "Detected Text From Image.",
-//                                style = MaterialTheme.typography.bodyLarge
-//                            )
-//                        }
-//
-//
-//                        Text(
-//                            text = text,
-//                            style = MaterialTheme.typography.bodySmall
-//                        )
-//                    }
-//                }
+                imageToText?.let { text ->
+                    Column(
+                        modifier = Modifier
+                            .clip(RoundedCornerShape(20.dp))
+                            .background(Color.White)
+                            .padding(16.dp)
+                            .fillMaxWidth(),
+                        verticalArrangement = Arrangement.spacedBy(10.dp)
+                    ) {
+                        Row(
+                            modifier = Modifier.fillMaxWidth(),
+                            verticalAlignment = Alignment.CenterVertically,
+                            horizontalArrangement = Arrangement.Center
+                        ) {
+                            Icon(
+                                imageVector = Icons.Outlined.Info,
+                                modifier = Modifier.size(20.dp),
+                                contentDescription = null
+                            )
+
+                            Spacer(modifier = Modifier.width(5.dp))
+
+                            Text(
+                                text = "Detected Text From Image.",
+                                style = MaterialTheme.typography.bodyLarge
+                            )
+                        }
+
+
+                        Text(
+                            text = text,
+                            style = MaterialTheme.typography.bodySmall
+                        )
+                    }
+                }
             }
         }
     }

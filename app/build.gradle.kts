@@ -83,4 +83,7 @@ dependencies {
 
     // ml kit for image to text
     implementation("com.google.mlkit:text-recognition:16.0.1")
+
+    // json
+    implementation("com.google.code.gson:gson:2.8.9")
 }

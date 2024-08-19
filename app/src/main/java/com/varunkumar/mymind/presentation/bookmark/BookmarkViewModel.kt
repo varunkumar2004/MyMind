@@ -37,11 +37,21 @@ class BookmarkViewModel @Inject constructor(
     private val _bookmark = MutableStateFlow(Bookmark())
     val bookmark = _bookmark.asStateFlow()
 
+    private val images = listOf(
+        "https://images.unsplash.com/photo-1605514449459-5a9cfa0b9955?q=80&w=1818&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1605514449459-5a9cfa0b9955?q=80&w=1818&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+        "https://images.unsplash.com/photo-1605514449459-5a9cfa0b9955?q=80&w=1818&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
+    )
+
+//    link of image with text in it
+//    val image = "https://picsum.photos/200/300"
+
     @OptIn(ExperimentalCoroutinesApi::class)
     val imageToText = _bookmark.flatMapLatest { bookmark ->
-        bookmark.imageUri?.let {
-            analyseImage(context)
-        } ?: flow { emit(null) }
+//        bookmark.imageUri?.let {
+//
+//        } ?: flow { emit(null) }
+        analyseImages(context, images)
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), null)
 
     fun getBookmark(id: Int = -1) {
@@ -83,6 +93,22 @@ class BookmarkViewModel @Inject constructor(
             )
             val textResult = textRecognizer.process(inputImage).await()
             emit(textResult.text)
+        } catch (e: Exception) {
+            e.printStackTrace()
+            emit(null)
+        }
+    }
+
+    fun analyseImages(context: Context, images: List<String>): Flow<String?> = flow {
+        try {
+            images.forEach { image ->
+                val inputImage = InputImage.fromBitmap(
+                    loadBitmapFromUri(context = context, uri = Uri.parse(image)),
+                    0
+                )
+                val textResult = textRecognizer.process(inputImage).await()
+                emit(textResult.text)
+            }
         } catch (e: Exception) {
             e.printStackTrace()
             emit(null)

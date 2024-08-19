@@ -1,6 +1,7 @@
 package com.varunkumar.mymind
 
 import android.os.Bundle
+import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -26,6 +27,9 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.navArgument
+import com.google.android.gms.common.util.JsonUtils
+import com.google.gson.Gson
+import com.google.gson.reflect.TypeToken
 import com.varunkumar.mymind.presentation.HomeViewModel
 import com.varunkumar.mymind.presentation.Routes
 import com.varunkumar.mymind.presentation.bookmark.BookmarkScreen
@@ -35,6 +39,7 @@ import com.varunkumar.mymind.presentation.search.SearchScreen
 import com.varunkumar.mymind.ui.theme.CustomTypography
 import com.varunkumar.mymind.ui.theme.MyMindTheme
 import dagger.hilt.android.AndroidEntryPoint
+import org.json.JSONArray
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -119,8 +124,10 @@ class MainActivity : ComponentActivity() {
                                 id = bookmarkId,
                                 onBackButtonClick = { navController.navigateUp() },
                                 onImagesSelected = { images ->
-                                    navController.navigate(Routes.Explore.route)
-//                                    navController.navigate(Routes.Explore.route + "/${images.joinToString(",")}")
+                                    val jsonString = "\"${Gson().toJson(images)}\""
+
+                                    Log.d("list navigation list", Routes.Explore.route + "/$jsonString")
+                                    navController.navigate(Routes.Explore.route + "/$jsonString")
                                 }
                             )
                         } else {
@@ -128,11 +135,27 @@ class MainActivity : ComponentActivity() {
                         }
                     }
 
-                    composable(route = Routes.Explore.route) {
-                        ExploreScreen(
-                            modifier = sModifier,
-                            onBackButtonClick = { navController.navigateUp() }
+                    composable(
+                        route = Routes.Explore.route + "/{images}",
+                        arguments = listOf(
+                            navArgument("images") {
+                                type = NavType.StringType
+                            }
                         )
+                    ) { backStackEntry ->
+                        val images = backStackEntry.arguments?.getString("images")
+//                        val listType = object : TypeToken<List<String>>() {}.type
+//                        val list: List<String> = Gson().fromJson(images, listType)
+
+                        Log.d("list navigation response", images.toString())
+
+//                        images?.let {
+//                            ExploreScreen(
+//                                modifier = sModifier,
+//                                images = list,
+//                                onBackButtonClick = { navController.navigateUp() }
+//                            )
+//                        }
                     }
                 }
             }
