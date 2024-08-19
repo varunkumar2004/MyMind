@@ -68,6 +68,9 @@ dependencies {
     implementation("androidx.room:room-runtime:$room_version")
     kapt("androidx.room:room-compiler:$room_version")
     implementation("androidx.room:room-ktx:$room_version")
+
+    // coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.6.0")
     implementation("androidx.lifecycle:lifecycle-runtime-compose:2.6.2")
 
     //hilt dependencies
