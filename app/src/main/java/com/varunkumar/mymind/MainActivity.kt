@@ -1,7 +1,6 @@
 package com.varunkumar.mymind
 
 import android.os.Bundle
-import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
@@ -12,8 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Close
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.BasicAlertDialog
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.getValue
@@ -32,7 +29,9 @@ import androidx.navigation.navArgument
 import com.varunkumar.mymind.presentation.HomeViewModel
 import com.varunkumar.mymind.presentation.Routes
 import com.varunkumar.mymind.presentation.bookmark.BookmarkScreen
+import com.varunkumar.mymind.presentation.bookmark.ExploreScreen
 import com.varunkumar.mymind.presentation.home.HomeScreen
+import com.varunkumar.mymind.presentation.search.SearchScreen
 import com.varunkumar.mymind.ui.theme.CustomTypography
 import com.varunkumar.mymind.ui.theme.MyMindTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -85,10 +84,22 @@ class MainActivity : ComponentActivity() {
                             onAddBookmarkButtonClick = {
                                 navController.navigate(Routes.Bookmark.route + "/-1")
                             },
+                            onSearchBookmarkButtonClick = {
+                                navController.navigate(Routes.Search.route)
+                            },
                             onBookmarkAction = { id ->
-                                Log.d("bookmark id", id.toString())
                                 navController.navigate(Routes.Bookmark.route + "/$id")
                             }
+                        )
+                    }
+
+                    composable(route = Routes.Search.route) {
+                        SearchScreen(
+                            modifier = sModifier,
+                            onBookmarkAction = { id ->
+                                navController.navigate(Routes.Bookmark.route + "/$id")
+                            },
+                            onBackButtonClick = { navController.navigateUp() }
                         )
                     }
 
@@ -106,11 +117,22 @@ class MainActivity : ComponentActivity() {
                             BookmarkScreen(
                                 modifier = sModifier,
                                 id = bookmarkId,
-                                onBackButtonClick = { navController.navigateUp() }
+                                onBackButtonClick = { navController.navigateUp() },
+                                onImagesSelected = { images ->
+                                    navController.navigate(Routes.Explore.route)
+//                                    navController.navigate(Routes.Explore.route + "/${images.joinToString(",")}")
+                                }
                             )
                         } else {
                             showAlert = true
                         }
+                    }
+
+                    composable(route = Routes.Explore.route) {
+                        ExploreScreen(
+                            modifier = sModifier,
+                            onBackButtonClick = { navController.navigateUp() }
+                        )
                     }
                 }
             }

@@ -40,6 +40,7 @@ fun HomeScreen(
     modifier: Modifier = Modifier,
     viewModel: HomeViewModel,
     onAddBookmarkButtonClick: () -> Unit,
+    onSearchBookmarkButtonClick: () -> Unit,
     onBookmarkAction: (Int) -> Unit
 ) {
     val state by viewModel.state.collectAsStateWithLifecycle()
@@ -62,8 +63,8 @@ fun HomeScreen(
         },
         floatingActionButton = {
             FloatingBottomBar(
-                viewModel = viewModel,
-                onAddButtonClick = onAddBookmarkButtonClick
+                onAddButtonClick = onAddBookmarkButtonClick,
+                onSearchButtonClick = onSearchBookmarkButtonClick
             )
         },
         floatingActionButtonPosition = FabPosition.Center,
@@ -73,12 +74,6 @@ fun HomeScreen(
                 .padding(innerPadding)
                 .padding(horizontal = 16.dp)
         ) {
-            Spacer(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(10.dp)
-            )
-
             LazyColumn (
                 modifier = Modifier.fillMaxWidth(),
             ) {
