@@ -29,16 +29,16 @@ fun BookmarkView(
             overflow = TextOverflow.Clip
         )
 
-        if (bookmark.imageUri != null) {
+        if (bookmark.images != null) {
             AsyncImage(
-                model = bookmark.imageUri,
+                model = bookmark.images,
                 contentDescription = "bookmark image"
             )
         } else {
-            if (bookmark.snippetText.isNotBlank()) {
+            if (bookmark.content.isNotBlank()) {
                 Text(
                     style = MaterialTheme.typography.bodySmall,
-                    text = bookmark.snippetText,
+                    text = bookmark.content,
                     maxLines = 4,
                     overflow = TextOverflow.Ellipsis
                 )

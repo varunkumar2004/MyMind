@@ -97,18 +97,18 @@ fun HomeScreen(
                         },
                         supportingContent = {
                             Text(
-                                text = bookmark.snippetText.take(130) + "...",
+                                text = bookmark.content.take(130) + "...",
                                 style = MaterialTheme.typography.bodySmall,
                                 overflow = TextOverflow.Ellipsis
                             )
                         },
                         trailingContent = {
-                            if (bookmark.imageUri != null) {
+                            if (bookmark.images != null) {
                                 AsyncImage(
                                     modifier = Modifier
                                         .size(100.dp)
                                         .clip(RoundedCornerShape(20.dp)),
-                                    model = bookmark.imageUri,
+                                    model = bookmark.images,
                                     contentDescription = null
                                 )
                             }

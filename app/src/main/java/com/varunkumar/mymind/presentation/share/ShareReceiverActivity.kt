@@ -52,7 +52,7 @@ class ShareReceiverActivity : ComponentActivity() {
             text?.let {
                 val bookmark = Bookmark(
                     title = System.currentTimeMillis().toString(),
-                    snippetText = it
+                    content = it
                 )
                 bookmarkRepository.insert(bookmark)
                 finish()

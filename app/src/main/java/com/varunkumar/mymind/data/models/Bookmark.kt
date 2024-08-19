@@ -1,6 +1,5 @@
 package com.varunkumar.mymind.data.models
 
-import android.net.Uri
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -8,7 +7,7 @@ import androidx.room.PrimaryKey
 data class Bookmark(
     @PrimaryKey(autoGenerate = true) val id: Int = 0,
     val title: String = "",
-    val snippetText: String = "",
-    val imageUri: String? = null,
+    val content: String = "",
+    val images: List<String>? = null,
     val timestamp: Long = System.currentTimeMillis()
 )

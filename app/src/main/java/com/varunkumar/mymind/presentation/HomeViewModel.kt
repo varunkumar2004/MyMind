@@ -27,7 +27,7 @@ class HomeViewModel @Inject constructor(
 
     val filterBookmarks = searchQuery.map { query ->
         _state.value.bookmarks.filter {
-            it.title.contains(query, ignoreCase = true) || it.snippetText.contains(query, ignoreCase = true)
+            it.title.contains(query, ignoreCase = true) || it.content.contains(query, ignoreCase = true)
         }
     }.stateIn(viewModelScope, SharingStarted.WhileSubscribed(), emptyList())
 

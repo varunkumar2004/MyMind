@@ -1,7 +1,6 @@
 package com.varunkumar.mymind.presentation.search
 
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -14,8 +13,6 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.outlined.Clear
-import androidx.compose.material.icons.outlined.Close
-import androidx.compose.material.icons.outlined.Search
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -23,8 +20,6 @@ import androidx.compose.material3.ListItem
 import androidx.compose.material3.ListItemDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SearchBar
-import androidx.compose.material3.SearchBarDefaults
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.material3.TextFieldDefaults
@@ -147,18 +142,18 @@ fun SearchScreen(
                         },
                         supportingContent = {
                             Text(
-                                text = bookmark.snippetText.take(130) + "...",
+                                text = bookmark.content.take(130) + "...",
                                 style = MaterialTheme.typography.bodySmall,
                                 overflow = TextOverflow.Ellipsis
                             )
                         },
                         trailingContent = {
-                            if (bookmark.imageUri != null) {
+                            if (bookmark.images != null) {
                                 AsyncImage(
                                     modifier = Modifier
                                         .size(100.dp)
                                         .clip(RoundedCornerShape(20.dp)),
-                                    model = bookmark.imageUri,
+                                    model = bookmark.images,
                                     contentDescription = null
                                 )
                             }
